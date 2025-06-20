@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { FcGoogle } from "react-icons/fc";
 import { FiEye, FiEyeOff } from "react-icons/fi"; // Ikon mata buka/tutup
+import Link from "next/link";
 
 export default function LoginPage() {
   useEffect(() => {
@@ -33,7 +34,7 @@ export default function LoginPage() {
           <h1 className="text-4xl font-bold mb-4 text-center text-zinc-900 dark:text-white">
             Welcome to <span className="text-[var(--primary)]">Langkahmu</span>
           </h1>
-          <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-6 text-center">
+          <p className="text-sm text-[var(--muted-foreground)] mb-6 text-center">
             Sign in to continue your journey.
           </p>
 
@@ -61,7 +62,7 @@ export default function LoginPage() {
               <button
                 type="button"
                 onClick={() => setShowPassword((prev) => !prev)}
-                className="absolute top-9 right-4 text-zinc-500 dark:text-zinc-400 hover:text-[var(--primary)]"
+                className="absolute cursor-pointer top-9 right-4 text-zinc-500 dark:text-zinc-400 hover:text-[var(--primary)]"
               >
                 {showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
               </button>
@@ -69,7 +70,7 @@ export default function LoginPage() {
 
             <button
               type="submit"
-              className="w-full py-3 px-4 bg-[var(--primary)] text-white rounded-xl hover:opacity-90 transition duration-300 ease-in-out"
+              className="w-full py-3 px-4 cursor-pointer bg-[var(--primary)] text-white rounded-xl hover:opacity-90 transition duration-300 ease-in-out"
             >
               Login
             </button>
@@ -81,10 +82,20 @@ export default function LoginPage() {
             <span className="w-16 h-px bg-[var(--border)]"></span>
           </div>
 
-          <button className="w-full py-3 px-4 border border-[var(--border)] rounded-xl flex items-center justify-center gap-3 text-zinc-800 dark:text-white bg-white dark:bg-zinc-900 hover:bg-[var(--primary)] hover:text-white dark:hover:bg-[var(--primary)] transition duration-300 ease-in-out">
+          <button className="w-full py-3 px-4 border cursor-pointer border-[var(--border)] rounded-xl flex items-center justify-center gap-3 text-zinc-800 dark:text-white bg-white dark:bg-zinc-900 hover:border-[var(--primary)] hover:text-white transition duration-300 ease-in-out">
             <FcGoogle className="w-5 h-5" />
             Sign in with Google
           </button>
+
+          <div className="mt-4 text-xs text-center text-zinc-400 dark:text-zinc-500">
+            Don&apos;t have an account?{" "}
+            <Link
+              href="/register"
+              className="underline cursor-pointer hover:text-[var(--primary)] transition"
+            >
+              Sign up
+            </Link>
+          </div>
 
           <div className="mt-6 text-xs text-center text-zinc-400 dark:text-zinc-500">
             By signing in, you agree to our <br />
