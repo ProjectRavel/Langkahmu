@@ -55,14 +55,14 @@ const publicProjects = [
 
 export default function Homepage() {
   return (
-    <section className="w-full bg-background pt-6 pb-24 mt-6">
-      <div className="max-w-6xl mx-auto px-4">
-        {/* Project Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+    <section className="w-full bg-background pt-10 pb-28">
+      <div className="max-w-4xl mx-auto px-4">
+        {/* Grid of Projects */}
+        <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3 gap-1">
           {publicProjects.map((project) => (
             <div
               key={project.id}
-              className="bg-muted overflow-hidden hover:shadow-md cursor-pointer transition-all"
+              className="bg-muted overflow-hidden hover:shadow-lg transition-all duration-200 cursor-pointer"
             >
               <div className="relative w-full aspect-square">
                 <Image
@@ -73,10 +73,10 @@ export default function Homepage() {
                 />
               </div>
               <div className="p-3">
-                <h3 className="text-sm font-medium text-foreground truncate">
+                <h3 className="text-base font-semibold text-foreground truncate">
                   {project.title}
                 </h3>
-                <p className="text-xs text-muted-foreground truncate">
+                <p className="text-xs text-muted-foreground">
                   oleh {project.author}
                 </p>
               </div>
