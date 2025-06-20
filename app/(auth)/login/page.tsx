@@ -90,7 +90,7 @@ export default function LoginPage() {
           <div className="mt-4 text-xs text-center text-zinc-400 dark:text-zinc-500">
             Don&apos;t have an account?{" "}
             <Link
-              href="/register"
+              href="/"
               className="underline cursor-pointer hover:text-[var(--primary)] transition"
             >
               Sign up
