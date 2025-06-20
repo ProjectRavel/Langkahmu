@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { FcGoogle } from "react-icons/fc";
 import { FiEye, FiEyeOff } from "react-icons/fi"; // Ikon mata buka/tutup
+import Link from "next/link";
 
 export default function LoginPage() {
   useEffect(() => {
@@ -85,6 +86,16 @@ export default function LoginPage() {
             <FcGoogle className="w-5 h-5" />
             Sign in with Google
           </button>
+
+          <div className="mt-4 text-xs text-center text-zinc-400 dark:text-zinc-500">
+            Don&apos;t have an account?{" "}
+            <Link
+              href="/register"
+              className="underline cursor-pointer hover:text-[var(--primary)] transition"
+            >
+              Sign up
+            </Link>
+          </div>
 
           <div className="mt-6 text-xs text-center text-zinc-400 dark:text-zinc-500">
             By signing in, you agree to our <br />
