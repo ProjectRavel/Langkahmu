@@ -8,6 +8,8 @@ const publicProjects = [
     title: "Langkah Awal",
     image: "/thumb1.png",
     author: "Ravels",
+    description:
+      "Proyek ini adalah langkah awal dalam perjalanan kreatif saya, di mana saya mengeksplorasi ide-ide baru dan mengembangkan keterampilan saya.",
   },
   {
     id: 2,
@@ -55,34 +57,46 @@ const publicProjects = [
 
 export default function Homepage() {
   return (
-    <section className="w-full bg-background pt-10 pb-28">
-      <div className="max-w-4xl mx-auto px-4">
+    <section className="w-full bg-background pt-5 pb-28">
+      <div className="max-w-4xl mx-auto px-4 ">
         {/* Grid of Projects */}
-        <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3 gap-1">
-          {publicProjects.map((project) => (
-            <div
-              key={project.id}
-              className="bg-muted overflow-hidden hover:shadow-lg transition-all duration-200 cursor-pointer"
-            >
-              <div className="relative w-full aspect-square">
-                <Image
-                  src={project.image}
-                  alt={project.title}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div className="p-3">
-                <h3 className="text-base font-semibold text-foreground truncate">
-                  {project.title}
-                </h3>
-                <p className="text-xs text-muted-foreground">
-                  oleh {project.author}
-                </p>
-              </div>
-            </div>
-          ))}
+        <div className="max-w-md mx-auto px-4 flex flex-col gap-8">
+  {publicProjects.map((project) => (
+    <div
+      key={project.id}
+      className=" border  rounded-md overflow-hidden shadow-md hover:shadow-xl transition cursor-pointer"
+    >
+      <div className="relative w-full aspect-square">
+        <Image
+          src={project.image}
+          alt={project.title}
+          fill
+          className="object-cover"
+          sizes="(max-width: 768px) 100vw, 400px"
+          priority
+        />
+      </div>
+      <div className="flex items-center gap-3 px-4 pt-4">
+        <div className="w-9 h-9 rounded-full bg-blue-400 flex items-center justify-center text-base font-bold text-white shadow">
+          {project.author[0]}
         </div>
+        <span className="text-sm font-semibold text-white">{project.author}</span>
+      </div>
+      <div className="px-4 pt-2 pb-1">
+        <h3 className="text-lg font-bold text-white mb-1">{project.title}</h3>
+        <p className="text-sm text-gray-600 mb-2">
+          {project.description || "Deskripsi tidak tersedia."}
+        </p>
+      </div>
+      <div className="px-4 pb-2 flex items-center gap-6 text-gray-500 text-sm border-t pt-2">
+        <button className="flex items-center gap-1 hover:text-primary transition">
+          {/* Read more */}
+          <a href="#">Read more &rarr;</a>
+        </button>
+      </div>
+    </div>
+  ))}
+</div>
       </div>
     </section>
   );
