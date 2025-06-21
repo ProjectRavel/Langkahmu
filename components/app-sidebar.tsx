@@ -65,19 +65,19 @@ const items = [
 
 export function AppSidebar() {
   return (
-    <Sidebar variant="sidebar">
+    <Sidebar variant="sidebar" >
       <SidebarHeader className="justify-center mt-4 mx-auto">
         <span className="font-bold text-2xl">Langkahmu.com</span>
       </SidebarHeader>
       <SidebarContent className="mt-4">
         <SidebarGroup>
           <SidebarGroupContent>
-            <SidebarMenu>
+            <SidebarMenu >
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton size={"lg"} isActive={item.active} asChild>
-                    <a href={item.url}>
-                      <item.icon size={28} className="!w-7 !h-7" />
+                    <a href={item.url} className="flex items-center gap-3  px-3 py-2 hover:bg-muted hover:text-white  rounded-lg transition-all duration-150">
+                      <item.icon size={20} className="!w-6 !h-6" />
                       <span>{item.title}</span>
                     </a>
                   </SidebarMenuButton>
