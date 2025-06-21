@@ -21,7 +21,7 @@ export default function RegisterPage() {
         {/* Left Side - Floating Image */}
         <div className="hidden md:flex w-1/2 items-center justify-center p-8 animate-float">
           <Image
-            src="/your-image.png" // Ganti dengan gambar kamu
+            src="/join_banner.svg" // Ganti dengan gambar kamu
             width={400}
             height={400}
             alt="Floating Illustration"
@@ -61,7 +61,7 @@ export default function RegisterPage() {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute inset-y-0 right-3 flex items-center text-zinc-500 dark:text-zinc-400"
+                className="absolute inset-y-0 right-3 cursor-pointer flex items-center text-zinc-500 dark:text-zinc-400"
               >
                 {showPassword ? <HiEyeOff size={20} /> : <HiEye size={20} />}
               </button>
@@ -69,7 +69,7 @@ export default function RegisterPage() {
 
             <button
               type="submit"
-              className="w-full py-3 px-4 mt-2 bg-[var(--primary)] text-white rounded-xl hover:opacity-90 transition"
+              className="w-full py-3 px-4 mt-2 bg-[var(--primary)] cursor-pointer text-white rounded-xl hover:opacity-90 transition"
             >
               Create Account
             </button>
@@ -81,7 +81,7 @@ export default function RegisterPage() {
             <div className="flex-grow border-t border-[var(--border)]"></div>
           </div>
 
-          <button className="w-full py-3 px-4 border border-[var(--border)] rounded-xl flex items-center justify-center gap-3 text-zinc-800 dark:text-white bg-white dark:bg-zinc-900 hover:bg-[var(--primary)] hover:text-white dark:hover:bg-[var(--primary)] transition duration-300 ease-in-out">
+          <button className="w-full py-3 px-4 cursor-pointer border border-[var(--border)] rounded-xl flex items-center justify-center gap-3 text-zinc-800 dark:text-white bg-white dark:bg-zinc-900 hover:border-[var(--primary)] hover:text-white transition duration-300 ease-in-out">
             <FcGoogle className="w-5 h-5" />
             Sign up with Google
           </button>

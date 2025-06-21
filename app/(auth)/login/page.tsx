@@ -23,7 +23,7 @@ export default function LoginPage() {
           <Image
             width={400}
             height={400}
-            src="/your-image.png"
+            src="/banner.svg"
             alt="Welcome Image"
             className="max-w-full h-auto object-contain drop-shadow-2xl"
           />
@@ -90,7 +90,7 @@ export default function LoginPage() {
           <div className="mt-4 text-xs text-center text-zinc-400 dark:text-zinc-500">
             Don&apos;t have an account?{" "}
             <Link
-              href="/"
+              href="/register"
               className="underline cursor-pointer hover:text-[var(--primary)] transition"
             >
               Sign up
