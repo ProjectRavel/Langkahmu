@@ -33,9 +33,9 @@ const publicProjects = [
 export default function Homepage() {
   return (
     <section className="w-full min-h-screen pt-6 pb-20 bg-[var(--background)] text-[var(--foreground)]">
-      <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row gap-10">
+      <div className="max-w-6xl mx-auto px-4 flex flex-col lg:flex-row gap-10">
         {/* Feed Area */}
-        <div className="w-full md:w-2/3 flex flex-col gap-8">
+        <div className="w-full lg:w-2/3 flex flex-col gap-8">
           {publicProjects.map((project) => (
             <div
               key={project.id}
@@ -71,7 +71,7 @@ export default function Homepage() {
         </div>
 
         {/* Profile Sidebar */}
-        <div className="w-full md:w-1/3 max-w-sm sticky top-6 self-start bg-[var(--card-bg)] border border-[var(--border)] rounded-2xl p-6 shadow-lg">
+        <div className="hidden lg:block md:w-1/3 max-w-sm sticky top-6 self-start bg-[var(--card-bg)] border border-[var(--border)] rounded-2xl p-6 shadow-lg">
           <div className="flex flex-col items-center text-center">
             <div className="relative w-24 h-24 mb-4">
               <Image
@@ -84,7 +84,9 @@ export default function Homepage() {
             <h2 className="text-lg font-bold truncate w-full">
               Rafael Pandu Sumanti
             </h2>
-            <p className="text-sm text-[var(--foreground)] mb-1">Bogor, West Java</p>
+            <p className="text-sm text-[var(--foreground)] mb-1">
+              Bogor, West Java
+            </p>
             <span className="bg-[var(--primary)] text-white text-xs font-semibold px-2 py-1 rounded-full mb-2">
               Fullstack Developer
             </span>
