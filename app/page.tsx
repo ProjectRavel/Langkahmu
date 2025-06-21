@@ -21,7 +21,7 @@ export default function RegisterPage() {
         {/* Left Side - Floating Image */}
         <div className="hidden md:flex w-1/2 items-center justify-center p-8 animate-float">
           <Image
-            src="/your-image.png" // Ganti dengan gambar kamu
+            src="/join_banner.svg" // Ganti dengan gambar kamu
             width={400}
             height={400}
             alt="Floating Illustration"

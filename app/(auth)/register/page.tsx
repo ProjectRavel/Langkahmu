@@ -17,13 +17,13 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
-      <div className="flex w-full max-w-5xl rounded-3xl overflow-hidden shadow-2xl border border-[var(--border)] bg-white/10 dark:bg-zinc-900/10 backdrop-blur-md">
+      <div className="flex w-full max-w-7xl rounded-3xl overflow-hidden shadow-2xl border border-[var(--border)] bg-white/10 dark:bg-zinc-900/10 backdrop-blur-md">
         {/* Left Side - Floating Image */}
         <div className="hidden md:flex w-1/2 items-center justify-center p-8 animate-float">
           <Image
             width={400}
             height={400}
-            src="/your-image.png"
+            src="/join_banner.svg"
             alt="Register Image"
             className="max-w-full h-auto object-contain drop-shadow-2xl"
           />
@@ -32,7 +32,7 @@ export default function RegisterPage() {
         {/* Right Side - Register Form */}
         <div className="w-full md:w-1/2 p-8">
           <h1 className="text-4xl font-bold mb-4 text-center text-zinc-900 dark:text-white">
-            Join <span className="text-[var(--primary)]">Langkahmu</span>
+            Join And Start with <span className="text-[var(--primary)]">Langkahmu</span>
           </h1>
           <p className="text-sm text-[var(--muted-foreground)] mb-6 text-center">
             Create an account to start your journey.
