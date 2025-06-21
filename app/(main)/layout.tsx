@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
+import { BottomNav } from "@/components/ui/bottomNav";
 import "@/app/globals.css";
 
 const geistSans = Geist({
@@ -33,12 +34,16 @@ export default function MainLayout({
       >
         <ThemeProvider attribute="class" defaultTheme="system">
           <SidebarProvider>
-            <AppSidebar />
-            <main className="ml-64 p-4">
-              {" "}
-              {/* Adjust layout spacing */}
-              {children}
-            </main>
+            {/* Desktop Sidebar */}
+            <div className="hidden md:block fixed top-0 left-0 h-full w-64 z-40">
+              <AppSidebar />
+            </div>
+
+            {/* Main content area */}
+            <main className="md:ml-64 pb-20 w-full">{children}</main>
+
+            {/* Mobile Bottom Navigation */}
+            <BottomNav />
           </SidebarProvider>
         </ThemeProvider>
       </body>
