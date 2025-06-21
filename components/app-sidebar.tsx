@@ -1,5 +1,12 @@
 "use client";
-import { Calendar, Home, Search, PlusSquare, Settings, User } from "lucide-react";
+import {
+  Calendar,
+  Home,
+  Search,
+  PlusSquare,
+  Settings,
+  User,
+} from "lucide-react";
 
 import {
   Sidebar,
