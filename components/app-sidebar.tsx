@@ -5,14 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 
-import {
-  Calendar,
-  Home,
-  Search,
-  Settings,
-  User,
-  LogOut,
-} from "lucide-react";
+import { Calendar, Home, Search, Settings, User, LogOut } from "lucide-react";
 
 import {
   Sidebar,
@@ -165,7 +158,7 @@ export function AppSidebar() {
       <SidebarFooter className="px-4 py-4 border-t border-border bg-muted/40">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <button className="w-full flex items-center gap-3 px-3 py-2 hover:bg-muted rounded-lg transition-all duration-150">
+            <button className="w-full flex items-center gap-3 px-3 py-2 hover:bg-muted rounded-lg transition-all duration-150 cursor-pointer">
               <div className="relative">
                 <Avatar className="h-10 w-10 ring-1 ring-ring/20">
                   <AvatarImage src="/profile.png" alt="@ravels" />
@@ -176,7 +169,7 @@ export function AppSidebar() {
               <div className="flex flex-col items-start justify-center overflow-hidden">
                 <span className="text-sm font-semibold truncate">Ravels</span>
                 <span className="text-xs text-muted-foreground truncate">
-                  rafaelsumanti01@gmail.com
+                  @rafaelpandu
                 </span>
               </div>
             </button>
@@ -187,24 +180,24 @@ export function AppSidebar() {
               Signed in as
             </DropdownMenuLabel>
             <div className="px-3 pb-2 text-sm font-medium truncate">
-              rafaelsumanti01@gmail.com
+              rafaelsumanti01
             </div>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              onClick={() => (window.location.href = "/profile")}
+              className="cursor-pointer hover:!bg-muted hover:!text-foreground"
             >
               <User className="w-4 h-4 mr-2" />
               Profile
             </DropdownMenuItem>
             <DropdownMenuItem
-              onClick={() => (window.location.href = "/settings")}
+              className="cursor-pointer hover:!bg-muted hover:!text-foreground"
             >
               <Settings className="w-4 h-4 mr-2" />
               Settings
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              className="text-red-500 hover:text-red-600"
+              className="cursor-pointer hover:!bg-muted !text-destructive hover:!text-destructive"
               onClick={() => alert("Logging out...")}
             >
               <LogOut className="w-4 h-4 mr-2" />
