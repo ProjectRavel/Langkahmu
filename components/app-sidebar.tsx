@@ -1,10 +1,14 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import clsx from "clsx";
+
 import {
   Calendar,
   Home,
   Search,
-  PlusSquare,
   Settings,
   User,
   LogOut,
@@ -23,6 +27,7 @@ import {
 } from "@/components/ui/sidebar";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -32,21 +37,31 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import clsx from "clsx";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
 const items = [
   { title: "Home", url: "/home", icon: Home },
   { title: "Todo's", url: "/todos", icon: Calendar },
   { title: "Search", url: "/search", icon: Search },
-  { title: "Create", url: "/create", icon: PlusSquare },
   { title: "Profile", url: "/profile", icon: User },
   { title: "Settings", url: "/settings", icon: Settings },
 ];
 
 export function AppSidebar() {
+  const [title, setTitle] = useState("");
+  const [desc, setDesc] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
   const [hasMounted, setHasMounted] = useState(false);
 
@@ -54,7 +69,7 @@ export function AppSidebar() {
     setHasMounted(true);
   }, []);
 
-  if (!hasMounted) return null; // atau bisa return loading skeleton;
+  if (!hasMounted) return null;
 
   return (
     <Sidebar variant="sidebar" className="bg-white border-r shadow-sm">
@@ -72,7 +87,7 @@ export function AppSidebar() {
                   "flex items-center gap-3 w-full px-4 py-2 text-base rounded-full transition-all hover:bg-muted hover:text-foreground cursor-pointer duration-150",
                   {
                     "text-foreground font-semibold": isActive,
-                    "text-muted-foreground": !isActive, 
+                    "text-muted-foreground": !isActive,
                   }
                 );
 
@@ -90,6 +105,58 @@ export function AppSidebar() {
                   </SidebarMenuItem>
                 );
               })}
+
+              <SidebarMenuItem>
+                <Dialog open={isOpen} onOpenChange={setIsOpen}>
+                  <DialogTrigger asChild>
+                    <Button className="w-full h-10 flex justify-center items-center gap-2 cursor-pointer">
+                      <span className="text-sm font-medium leading-none">
+                        Create
+                      </span>
+                    </Button>
+                  </DialogTrigger>
+
+                  <DialogContent className="sm:max-w-md">
+                    <DialogHeader>
+                      <DialogTitle>Create New Post</DialogTitle>
+                      <DialogDescription>
+                        Share your idea, Project, or anything with the world!
+                      </DialogDescription>
+                    </DialogHeader>
+                    <form
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        console.log({ title, desc });
+                        setIsOpen(false);
+                        setTitle("");
+                        setDesc("");
+                      }}
+                      className="space-y-4"
+                    >
+                      <div>
+                        <Input
+                          placeholder="Title"
+                          value={title}
+                          onChange={(e) => setTitle(e.target.value)}
+                          required
+                        />
+                      </div>
+                      <div>
+                        <Textarea
+                          placeholder="Your thoughts"
+                          value={desc}
+                          onChange={(e) => setDesc(e.target.value)}
+                          rows={4}
+                          required
+                        />
+                      </div>
+                      <div className="flex justify-end">
+                        <Button type="submit">Publish</Button>
+                      </div>
+                    </form>
+                  </DialogContent>
+                </Dialog>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
