@@ -9,36 +9,43 @@ export default function ProfilePage() {
   return (
     <section className="w-full min-h-screen pt-16 pb-20 bg-[var(--background)] text-[var(--foreground)]">
       <div className="max-w-6xl mx-auto px-6">
-        {/* PROFILE */}
-        <div className="grid grid-cols-1 lg:flex lg:justify-between items-start gap-12">
-          {/* Info Kiri */}
-          <div className="flex flex-col gap-4 text-center lg:text-left">
-            <h1 className="text-5xl sm:text-6xl font-extrabold tracking-tight leading-tight">
-              ravels
-            </h1>
+        {/* Avatar + Profile Info */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 items-start gap-10">
+          {/* Avatar */}
+          <div className="lg:order-2 flex justify-center lg:justify-end">
+            <div className="relative group transition-transform hover:scale-105">
+              <div className="absolute -inset-1 rounded-full bg-gradient-to-tr from-primary to-purple-500 blur opacity-25 group-hover:opacity-40 transition"></div>
+              <Avatar className="h-40 w-40 sm:h-44 sm:w-44 rounded-full border-4 border-muted shadow-xl relative z-10">
+                <AvatarImage src="/profile.png" />
+                <AvatarFallback className="text-2xl font-bold bg-muted">
+                  RP
+                </AvatarFallback>
+              </Avatar>
+            </div>
+          </div>
 
-            <Badge className="w-fit mx-auto lg:mx-0 px-4 py-1.5 text-base rounded-full bg-primary/90 text-white shadow-md">
-              Fullstack Dev
+          {/* Info */}
+          <div className="flex flex-col gap-4 text-center lg:text-left lg:items-start">
+            {/* Nama & Username */}
+            <div>
+              <h1 className="text-5xl sm:text-6xl font-extrabold tracking-tight leading-tight">
+                ravels
+              </h1>
+              <p className="text-lg sm:text-xl font-medium text-zinc-500 dark:text-zinc-400">
+                @rafaelpandu
+              </p>
+            </div>
+
+            {/* Badge */}
+            <Badge className="w-fit mx-auto lg:mx-0 px-4 py-1.5 text-base rounded-full bg-primary/90 text-white shadow-md flex items-center gap-2 hover:scale-105 transition-transform">
+              <span>💻</span> Fullstack Dev
             </Badge>
 
-            <p className="text-lg sm:text-xl font-medium text-muted-foreground">
-              @rafaelpandu
-            </p>
-
+            {/* Deskripsi */}
             <p className="text-base sm:text-lg text-zinc-600 dark:text-zinc-400 max-w-xl leading-relaxed mx-auto lg:mx-0">
               Suka ngoding, ngopi, dan explore hal baru ✨. Mengembangkan ide
               jadi nyata lewat code & kolaborasi.
             </p>
-          </div>
-
-          {/* Avatar Kanan */}
-          <div className="self-center lg:self-start relative group">
-            <Avatar className="h-44 w-44 sm:h-48 sm:w-48 rounded-full border-4 border-muted shadow-lg transition-transform group-hover:scale-105">
-              <AvatarImage src="/profile.png" />
-              <AvatarFallback className="text-2xl font-bold bg-muted">
-                RP
-              </AvatarFallback>
-            </Avatar>
           </div>
         </div>
 
@@ -58,6 +65,7 @@ export default function ProfilePage() {
           </div>
         </div>
 
+        {/* PROJECTS */}
         <div className="mt-12 flex flex-col gap-6">
           {[
             {
@@ -78,7 +86,7 @@ export default function ProfilePage() {
           ].map((project, i) => (
             <div
               key={i}
-              className="flex gap-4 p-6 rounded-2xl border-b border-border cursor-pointer"
+              className="flex flex-col sm:flex-row gap-4 p-6 rounded-2xl border border-border bg-background hover:shadow-xl transition-shadow duration-300 cursor-pointer"
             >
               {/* Avatar */}
               <Avatar className="h-14 w-14 mt-1">
@@ -88,7 +96,6 @@ export default function ProfilePage() {
 
               {/* Content */}
               <div className="flex flex-col w-full">
-                {/* Header */}
                 <div className="flex items-center gap-2">
                   <h2 className="font-semibold text-lg">ravels</h2>
                   <span className="text-base text-muted-foreground">
@@ -96,15 +103,13 @@ export default function ProfilePage() {
                   </span>
                 </div>
 
-                {/* Judul & Deskripsi */}
                 <h3 className="text-xl font-semibold mt-1">{project.title}</h3>
-                <p className="text-base text-muted-foreground mt-2 leading-relaxed">
+                <p className="text-base text-zinc-600 dark:text-zinc-400 mt-2 leading-relaxed">
                   {project.desc}
                 </p>
 
-                {/* Gambar Project */}
                 {project.image && (
-                  <div className="mt-4 rounded-xl overflow-hidden border border-border">
+                  <div className="mt-4 rounded-xl overflow-hidden border border-border hover:scale-[1.01] transition-transform">
                     <Image
                       src={project.image}
                       alt={project.title}
@@ -115,13 +120,12 @@ export default function ProfilePage() {
                   </div>
                 )}
 
-                {/* Actions */}
                 <div className="mt-4 flex items-center gap-8 text-muted-foreground text-base">
-                  <button className="flex items-center gap-2 hover:text-red-500 cursor-pointer transition">
+                  <button className="flex items-center gap-2 hover:text-red-500 cursor-pointer transition hover:scale-105">
                     <Heart className="w-5 h-5" />
                     <span>45</span>
                   </button>
-                  <button className="flex items-center gap-2 hover:text-primary cursor-pointer transition">
+                  <button className="flex items-center gap-2 hover:text-primary cursor-pointer transition hover:scale-105">
                     <MessageCircle className="w-5 h-5" />
                     <span>3</span>
                   </button>
