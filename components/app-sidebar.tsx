@@ -1,4 +1,5 @@
 "use client";
+
 import {
   Calendar,
   Home,
@@ -6,6 +7,7 @@ import {
   PlusSquare,
   Settings,
   User,
+  LogOut,
 } from "lucide-react";
 
 import {
@@ -30,70 +32,69 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-// Menu items.
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import clsx from "clsx";
+
 const items = [
-  {
-    title: "Home",
-    url: "/home",
-    icon: Home,
-    active: true,
-  },
-  {
-    title: "Todo's",
-    url: "#",
-    icon: Calendar,
-    active: false,
-  },
-  {
-    title: "Search",
-    url: "#",
-    icon: Search,
-    active: false,
-  },
-  {
-    title: "Create",
-    url: "#",
-    icon: PlusSquare,
-    active: false,
-  },
-  {
-    title: "Profile",
-    url: "#",
-    icon: User,
-    active: false,
-  },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
-    active: false,
-  },
+  { title: "Home", url: "/home", icon: Home },
+  { title: "Todo's", url: "/todos", icon: Calendar },
+  { title: "Search", url: "/search", icon: Search },
+  { title: "Create", url: "/create", icon: PlusSquare },
+  { title: "Profile", url: "/profile", icon: User },
+  { title: "Settings", url: "/settings", icon: Settings },
 ];
 
 export function AppSidebar() {
+  const pathname = usePathname();
+  const [hasMounted, setHasMounted] = useState(false);
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
+  if (!hasMounted) return null; // atau bisa return loading skeleton;
+
   return (
-    <Sidebar variant="sidebar">
+    <Sidebar variant="sidebar" className="bg-white border-r shadow-sm">
       <SidebarHeader className="justify-center mt-4 mx-auto">
-        <span className="font-bold text-2xl">Langkahmu.com</span>
+        <span className="font-bold text-2xl">Langkahmu</span>
       </SidebarHeader>
-      <SidebarContent className="mt-4">
+
+      <SidebarContent className="mt-6">
         <SidebarGroup>
           <SidebarGroupContent>
-            <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton size={"lg"} isActive={item.active} asChild>
-                    <a href={item.url}>
-                      <item.icon size={28} className="!w-7 !h-7" />
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+            <SidebarMenu className="space-y-2">
+              {items.map((item) => {
+                const isActive = pathname === item.url;
+                const buttonClasses = clsx(
+                  "flex items-center gap-3 w-full px-4 py-2 text-base rounded-full transition-all hover:bg-muted hover:text-foreground cursor-pointer duration-150",
+                  {
+                    "text-foreground font-semibold": isActive,
+                    "text-muted-foreground": !isActive, 
+                  }
+                );
+
+                return (
+                  <SidebarMenuItem key={item.title}>
+                    <Link href={item.url}>
+                      <SidebarMenuButton
+                        size="default"
+                        className={buttonClasses}
+                      >
+                        <item.icon className="w-5 h-5" />
+                        <span>{item.title}</span>
+                      </SidebarMenuButton>
+                    </Link>
+                  </SidebarMenuItem>
+                );
+              })}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+
       <SidebarFooter className="px-4 py-4 border-t border-border bg-muted/40">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -113,6 +114,7 @@ export function AppSidebar() {
               </div>
             </button>
           </DropdownMenuTrigger>
+
           <DropdownMenuContent side="top" align="end" className="w-56 mb-2">
             <DropdownMenuLabel className="text-xs">
               Signed in as
@@ -124,11 +126,13 @@ export function AppSidebar() {
             <DropdownMenuItem
               onClick={() => (window.location.href = "/profile")}
             >
+              <User className="w-4 h-4 mr-2" />
               Profile
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={() => (window.location.href = "/settings")}
             >
+              <Settings className="w-4 h-4 mr-2" />
               Settings
             </DropdownMenuItem>
             <DropdownMenuSeparator />
@@ -136,6 +140,7 @@ export function AppSidebar() {
               className="text-red-500 hover:text-red-600"
               onClick={() => alert("Logging out...")}
             >
+              <LogOut className="w-4 h-4 mr-2" />
               Logout
             </DropdownMenuItem>
           </DropdownMenuContent>
