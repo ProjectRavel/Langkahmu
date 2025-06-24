@@ -35,7 +35,7 @@ interface CustomUser extends AdapterUser {
   password?: string;
 }
 
-export const authOptions: NextAuthOptions = {
+const authOptions: NextAuthOptions = {
   providers: [
     // Google OAuth Provider
     GoogleProvider({
