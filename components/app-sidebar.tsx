@@ -49,6 +49,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { signOut } from "next-auth/react";
 
 const items = [
   { title: "Home", url: "/home", icon: Home },
@@ -205,7 +206,7 @@ export function AppSidebar() {
             <DropdownMenuSeparator />
             <DropdownMenuItem
               className="text-red-500 hover:text-red-600"
-              onClick={() => alert("Logging out...")}
+              onClick={() => signOut({ callbackUrl: "/login" })}
             >
               <LogOut className="w-4 h-4 mr-2" />
               Logout
