@@ -1,4 +1,5 @@
 "use client";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 
 const publicProjects = [
@@ -31,6 +32,9 @@ const publicProjects = [
 ];
 
 export default function Homepage() {
+
+  console.log(useSession())
+
   return (
     <section className="w-full min-h-screen pt-6 pb-20 bg-[var(--background)] text-[var(--foreground)]">
       <div className="max-w-6xl mx-auto px-4 flex flex-col lg:flex-row gap-10">
