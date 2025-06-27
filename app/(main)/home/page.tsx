@@ -1,6 +1,7 @@
 "use client";
-import { useSession } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 const publicProjects = [
   {
@@ -32,8 +33,8 @@ const publicProjects = [
 ];
 
 export default function Homepage() {
-
-  console.log(useSession())
+  const { data: session } = useSession();
+  const user = session?.user;
 
   return (
     <section className="w-full min-h-screen pt-6 pb-20 bg-[var(--background)] text-[var(--foreground)]">
@@ -79,18 +80,15 @@ export default function Homepage() {
           <div className="flex flex-col items-center text-center">
             <div className="relative w-24 h-24 mb-4">
               <Image
-                src="/profile.png"
+                src={user?.image || "/profile.png"}
                 alt="Profile"
                 fill
                 className="rounded-full object-cover border border-white/20 shadow-md"
               />
             </div>
             <h2 className="text-lg font-bold truncate w-full">
-              Rafael Pandu Sumanti
+              {user?.name || "John Doe"}
             </h2>
-            <p className="text-sm text-[var(--foreground)] mb-1">
-              Bogor, West Java
-            </p>
             <span className="bg-[var(--primary)] text-white text-xs font-semibold px-2 py-1 rounded-full mb-2">
               Fullstack Developer
             </span>
@@ -112,12 +110,12 @@ export default function Homepage() {
                 <p>Teams</p>
               </div>
             </div>
-            <button className="w-full border border-dashed border-[var(--primary)] text-[var(--primary)] rounded-xl py-2 hover:bg-[var(--primary)] hover:text-white transition text-sm font-medium mb-3">
+            <button className="w-full border border-dashed border-[var(--primary)] text-[var(--primary)] rounded-xl py-2 cursor-pointer hover:bg-[var(--primary)] hover:text-white transition text-sm font-medium mb-3">
               + Create New Post
             </button>
-            <button className="w-full bg-[var(--primary)] hover:bg-blue-700 text-white rounded-xl py-2 transition text-sm font-medium">
+            <Link href="/profile" className="w-full bg-[var(--primary)] hover:bg-[var(--primary)]/80 cursor-pointer text-white rounded-xl py-2 transition text-sm font-medium">
               View My Projects
-            </button>
+            </Link>
           </div>
         </div>
       </div>
