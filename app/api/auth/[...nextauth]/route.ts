@@ -15,6 +15,8 @@ declare module "next-auth" {
     user: {
       id: string;
       name?: string | null;
+      username?: string | null;
+      bio?: string | null;
       email?: string | null;
       image?: string | null;
     };
@@ -23,6 +25,8 @@ declare module "next-auth" {
   interface User {
     id: string;
     name?: string | null;
+    username?: string | null;
+    bio?: string | null;
     email?: string | null;
     image?: string | null;
     password?: string;
@@ -99,6 +103,8 @@ const authOptions: NextAuthOptions = {
       if (!existingUser && account?.provider === "google") {
         const newUser = await User.create({
           name: user.name,
+          username: user.name,
+          bio: "",
           email: user.email,
           image: user.image,
         });
@@ -116,6 +122,7 @@ const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.id = user._id?.toString() || token.id;
+        token.username = user.username || token.username;
       }
       return token;
     },
@@ -126,6 +133,7 @@ const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as string;
+        session.user.username = token.username as string;
       }
       return session;
     },
