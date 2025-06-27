@@ -5,14 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 
-import {
-  Calendar,
-  Home,
-  Search,
-  Settings,
-  User,
-  LogOut,
-} from "lucide-react";
+import { Calendar, Home, Search, Settings, User, LogOut } from "lucide-react";
 
 import {
   Sidebar,
@@ -50,6 +43,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 const items = [
   { title: "Home", url: "/home", icon: Home },
@@ -65,6 +59,10 @@ export function AppSidebar() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
   const [hasMounted, setHasMounted] = useState(false);
+  const { data: session } = useSession();
+  const user = session?.user;
+
+  console.log("image: ", user?.image);
 
   useEffect(() => {
     setHasMounted(true);
@@ -169,15 +167,17 @@ export function AppSidebar() {
             <button className="w-full flex items-center gap-3 px-3 py-2 hover:bg-muted rounded-lg transition-all duration-150">
               <div className="relative">
                 <Avatar className="h-10 w-10 ring-1 ring-ring/20">
-                  <AvatarImage src="/profile.png" alt="@ravels" />
-                  <AvatarFallback>RV</AvatarFallback>
+                  <AvatarImage src={user?.image || ""} alt={user?.name || ""  } />
+                  <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
                 </Avatar>
                 <span className="absolute bottom-0 right-0 h-2.5 w-2.5 bg-emerald-500 rounded-full border-2 border-background" />
               </div>
               <div className="flex flex-col items-start justify-center overflow-hidden">
-                <span className="text-sm font-semibold truncate">Ravels</span>
+                <span className="text-sm font-semibold truncate">
+                  {user?.name}
+                </span>
                 <span className="text-xs text-muted-foreground truncate">
-                  rafaelsumanti01@gmail.com
+                  {user?.email}
                 </span>
               </div>
             </button>
