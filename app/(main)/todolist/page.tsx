@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import {
-  Plus,
   Calendar,
   Clock,
   Tag,
@@ -69,7 +68,6 @@ export default function MyDay() {
     setTasks(tasks.map(t => (t.id === id ? { ...t, editing: true } : t)));
   };
 
-  const filteredTasks = (cat: Category) => tasks.filter((t) => t.category === cat);
 
   return (
     <section className="w-full min-h-screen bg-black text-white px-4 py-4">
