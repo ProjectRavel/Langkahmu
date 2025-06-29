@@ -15,7 +15,7 @@
   --secondary: #0f1419;
   --secondary-foreground: #ffffff;
   --muted: #e5e5e6;
-  --muted-foreground: #0f1419;
+  --muted-foreground: #969696;
   --accent: #e3ecf6;
   --accent-foreground: #1e9df1;
   --destructive: #f4212e;
@@ -31,9 +31,9 @@
   --sidebar: #f7f8f8;
   --sidebar-foreground: #0f1419;
   --sidebar-primary: #1e9df1;
-  --sidebar-primary-foreground: #ffffff;
+  --sidebar-primary-foreground: #000000;
   --sidebar-accent: #e3ecf6;
-  --sidebar-accent-foreground: #1e9df1;
+  --sidebar-accent-foreground: #000000;
   --sidebar-border: #e1e8ed;
   --sidebar-ring: #1da1f2;
   --font-sans: Open Sans, sans-serif;
@@ -62,7 +62,7 @@
   --card-foreground: #d9d9d9;
   --popover: #000000;
   --popover-foreground: #e7e9ea;
-  --primary: #1c9cf0;
+  --primary: #1eaaf1;
   --primary-foreground: #ffffff;
   --secondary: #f0f3f4;
   --secondary-foreground: #0f1419;
@@ -81,11 +81,11 @@
   --chart-4: #17bf63;
   --chart-5: #e0245e;
   --sidebar: #17181c;
-  --sidebar-foreground: #d9d9d9;
-  --sidebar-primary: #1da1f2;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #ffffff;
   --sidebar-primary-foreground: #ffffff;
   --sidebar-accent: #061622;
-  --sidebar-accent-foreground: #1c9cf0;
+  --sidebar-accent-foreground: #ffffff;
   --sidebar-border: #38444d;
   --sidebar-ring: #1da1f2;
   --font-sans: Open Sans, sans-serif;
@@ -181,4 +181,42 @@
 
 .animate-float {
   animation: float 4s ease-in-out infinite;
+}
+
+/* Scrollbar untuk Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background-color: #444;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease forwards;
 }
