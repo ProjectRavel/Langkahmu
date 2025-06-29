@@ -36,7 +36,7 @@ export default function ProfilePage() {
             <div className="relative group transition-transform">
               <div className="absolute -inset-1 rounded-full bg-gradient-to-tr from-primary to-purple-500 blur opacity-25 group-hover:opacity-40 transition"></div>
               <Avatar className="h-44 w-44 sm:h-48 sm:w-48 rounded-full border-4 border-muted shadow-lg relative z-10">
-                <AvatarImage src="/profile.png" />
+                <AvatarImage src={user?.image || ""} alt={user?.name || ""} className="object-cover" />
                 <AvatarFallback className="text-2xl font-bold bg-muted">
                   RP
                 </AvatarFallback>
