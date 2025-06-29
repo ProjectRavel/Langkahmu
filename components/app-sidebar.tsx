@@ -56,19 +56,51 @@ const items = [
 export function AppSidebar() {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
+  const [loading, setloading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
   const [hasMounted, setHasMounted] = useState(false);
   const { data: session } = useSession();
   const user = session?.user;
 
-  console.log("image: ", user?.image);
-
   useEffect(() => {
     setHasMounted(true);
   }, []);
 
+  console.log(title, desc);
+
   if (!hasMounted) return null;
+
+  const handleCreatePost = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setloading(true);
+
+    try {
+      const res = await fetch("api/project/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: user?.id,
+          title,
+          description: desc,
+          images: [],
+        }),
+      });
+      if (!res.ok) {
+        throw new Error("Failed to create project");
+      }
+      setloading(false);
+      setIsOpen(false);
+      setTitle("");
+      setDesc("");
+    } catch (error) {
+      console.error("Error creating project:", error);
+      setloading(false);
+      return;
+    }
+  };
 
   return (
     <Sidebar variant="sidebar" className="bg-white border-r shadow-sm">
@@ -123,13 +155,7 @@ export function AppSidebar() {
                       </DialogDescription>
                     </DialogHeader>
                     <form
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        console.log({ title, desc });
-                        setIsOpen(false);
-                        setTitle("");
-                        setDesc("");
-                      }}
+                      onSubmit={handleCreatePost}
                       className="space-y-4"
                     >
                       <div>
@@ -150,7 +176,7 @@ export function AppSidebar() {
                         />
                       </div>
                       <div className="flex justify-end">
-                        <Button type="submit">Publish</Button>
+                        <Button type="submit" disabled={loading}>{loading ? "Publishing..." : "Publish"}</Button>
                       </div>
                     </form>
                   </DialogContent>
@@ -167,7 +193,7 @@ export function AppSidebar() {
             <button className="w-full flex items-center gap-3 px-3 py-2 hover:bg-muted rounded-lg transition-all duration-150">
               <div className="relative">
                 <Avatar className="h-10 w-10 ring-1 ring-ring/20">
-                  <AvatarImage src={user?.image || ""} alt={user?.name || ""  } />
+                  <AvatarImage src={user?.image || ""} alt={user?.name || ""} />
                   <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
                 </Avatar>
                 <span className="absolute bottom-0 right-0 h-2.5 w-2.5 bg-emerald-500 rounded-full border-2 border-background" />
