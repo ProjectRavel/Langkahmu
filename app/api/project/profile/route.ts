@@ -1,6 +1,6 @@
 import { connectDB } from "@/lib/mongodb";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth";
 import { NextResponse } from "next/server";
 import Project from "@/models/Project";
 
@@ -19,9 +19,7 @@ export async function GET() {
     const userProjects = await Project.find({ userId }).sort({ createdAt: -1 });
 
     if (!userProjects || userProjects.length === 0) {
-      return new Response(JSON.stringify({ message: "No projects found" }), {
-        status: 404,
-      });
+      return Response.json({ userProjects: [] }, { status: 200 });
     }
 
     return NextResponse.json({ userProjects }, { status: 200 });
