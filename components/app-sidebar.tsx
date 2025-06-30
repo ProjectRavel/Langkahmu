@@ -44,6 +44,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { signOut } from "next-auth/react";
 import { useSession } from "next-auth/react";
+import { mutate } from "swr";
 
 const items = [
   { title: "Home", url: "/home", icon: Home },
@@ -58,8 +59,8 @@ export function AppSidebar() {
   const [desc, setDesc] = useState("");
   const [loading, setloading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const pathname = usePathname();
   const [hasMounted, setHasMounted] = useState(false);
+  const pathname = usePathname();
   const { data: session } = useSession();
   const user = session?.user;
 
@@ -76,7 +77,7 @@ export function AppSidebar() {
     setloading(true);
 
     try {
-      const res = await fetch("api/project/create", {
+      const res = await fetch("/api/project/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -88,9 +89,15 @@ export function AppSidebar() {
           images: [],
         }),
       });
+
       if (!res.ok) {
         throw new Error("Failed to create project");
       }
+
+      // Trigger re-fetch data project setelah berhasil buat
+      await mutate("/api/project/profile");
+
+      // Reset form & modal
       setloading(false);
       setIsOpen(false);
       setTitle("");
@@ -98,7 +105,6 @@ export function AppSidebar() {
     } catch (error) {
       console.error("Error creating project:", error);
       setloading(false);
-      return;
     }
   };
 
@@ -154,10 +160,7 @@ export function AppSidebar() {
                         Share your idea, Project, or anything with the world!
                       </DialogDescription>
                     </DialogHeader>
-                    <form
-                      onSubmit={handleCreatePost}
-                      className="space-y-4"
-                    >
+                    <form onSubmit={handleCreatePost} className="space-y-4">
                       <div>
                         <Input
                           placeholder="Title"
@@ -176,7 +179,9 @@ export function AppSidebar() {
                         />
                       </div>
                       <div className="flex justify-end">
-                        <Button type="submit" disabled={loading}>{loading ? "Publishing..." : "Publish"}</Button>
+                        <Button type="submit" disabled={loading}>
+                          {loading ? "Publishing..." : "Publish"}
+                        </Button>
                       </div>
                     </form>
                   </DialogContent>
