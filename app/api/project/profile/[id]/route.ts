@@ -1,6 +1,7 @@
 import { connectDB } from "@/lib/mongodb";
 import { NextResponse } from "next/server";
 import Project from "@/models/Project";
+import cloudinary from "@/lib/cloudinary";
 
 // Type Context agar konsisten & clean
 
@@ -9,11 +10,16 @@ export async function DELETE(
   req: Request,
   context: { params: Promise<{ id: string }> }
 ) {
-  const { id } = await context.params; // Menunggu resolusi dari Promise params
+  const { id } = await context.params;
+  const body = await req.json();
+  const { publicId } = body;
 
   try {
     await connectDB();
     const deletedProject = await Project.findByIdAndDelete(id);
+    if (deletedProject && publicId) {
+      await cloudinary.uploader.destroy(publicId);
+    }
 
     if (!deletedProject) {
       return NextResponse.json(
