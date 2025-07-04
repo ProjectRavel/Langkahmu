@@ -1,20 +1,11 @@
 "use client";
 
-import { useEffect, useState, useRef, useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import clsx from "clsx";
 
-import {
-  Calendar,
-  Home,
-  Search,
-  Settings,
-  User,
-  LogOut,
-  X,
-  ImagePlus,
-} from "lucide-react";
+import { Calendar, Home, Search, Settings, User, LogOut } from "lucide-react";
 
 import {
   Sidebar,
@@ -39,31 +30,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { signOut } from "next-auth/react";
 import { useSession } from "next-auth/react";
-import { mutate } from "swr";
+import SidebarFormPost from "./sidebar/sidebarFormPost";
 
 export function AppSidebar() {
-  const [title, setTitle] = useState("");
-  const [desc, setDesc] = useState("");
-  const [image, setImage] = useState<File | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const [loading, setloading] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
   const { data: session } = useSession();
   const pathname = usePathname();
@@ -85,61 +56,9 @@ export function AppSidebar() {
     setHasMounted(true);
   }, []);
 
-  useEffect(() => {
-    return () => {
-      if (previewUrl) URL.revokeObjectURL(previewUrl);
-    };
-  }, [previewUrl]);
-
-  console.log(title, desc);
-
   if (!hasMounted) {
     return <div className="w-[240px] bg-muted animate-pulse h-screen" />;
   }
-
-  const handleCreatePost = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setloading(true);
-
-    try {
-      const formData = new FormData();
-      if (image) formData.append("image", image); // tidak perlu `as Blob` jika sudah File
-      formData.append("title", title);
-      formData.append("description", desc);
-      formData.append("userId", session?.user.id || "");
-
-      const res = await fetch("/api/project/create", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!res.ok) {
-        throw new Error("Failed to create project");
-      }
-
-      await mutate("/api/project/profile");
-
-      setloading(false);
-      setIsOpen(false);
-      setTitle("");
-      setDesc("");
-      setImage(null);
-    } catch (error) {
-      console.error("Error creating project:", error);
-      setloading(false);
-    }
-  };
-
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setImage(file);
-      setPreviewUrl(URL.createObjectURL(file));
-    } else {
-      setImage(null);
-      setPreviewUrl(null);
-    }
-  };
 
   return (
     <Sidebar variant="sidebar" className="bg-white border-r shadow-sm">
@@ -176,123 +95,7 @@ export function AppSidebar() {
               })}
 
               <SidebarMenuItem>
-                <Dialog open={isOpen} onOpenChange={setIsOpen}>
-                  <DialogTrigger asChild>
-                    <Button className="w-full h-10 flex justify-center items-center gap-2 cursor-pointer">
-                      <span className="text-sm font-medium leading-none">
-                        Create
-                      </span>
-                    </Button>
-                  </DialogTrigger>
-
-                  <DialogContent className="sm:max-w-3xl">
-                    <DialogHeader>
-                      <DialogTitle>Create New Post</DialogTitle>
-                      <DialogDescription>
-                        Share your idea, Project, or anything with the world!
-                      </DialogDescription>
-                    </DialogHeader>
-                    <form
-                      onSubmit={handleCreatePost}
-                      className="grid gap-6 grid-cols-1 lg:grid-cols-2 items-start"
-                    >
-                      <div className="relative w-full h-64 bg-muted/50 border border-dashed rounded-xl overflow-hidden animate-in fade-in duration-200">
-                        {previewUrl ? (
-                          <>
-                            <Image
-                              src={previewUrl}
-                              alt="Preview"
-                              width={300}
-                              height={300}
-                              className="object-cover w-full h-full rounded-xl"
-                            />
-                            <button
-                              type="button"
-                              onClick={() => {
-                                setImage(null);
-                                setPreviewUrl(null);
-                                if (fileInputRef.current) {
-                                  fileInputRef.current.value = "";
-                                }
-                              }}
-                              className="absolute top-2 right-2 bg-background/60 backdrop-blur border border-border rounded-full p-1 hover:bg-background cursor-pointer duration-200 transition"
-                              title="Remove Image"
-                            >
-                              <X size={16} />
-                            </button>
-                          </>
-                        ) : (
-                          <label
-                            htmlFor="fileUpload"
-                            className="flex flex-col items-center justify-center w-full h-full text-center text-muted-foreground space-y-2 cursor-pointer hover:bg-muted/70 transition"
-                          >
-                            <ImagePlus size={32} />
-                            <p className="text-sm font-medium">
-                              No image selected
-                            </p>
-                            <p className="text-xs">Click to upload an image</p>
-                          </label>
-                        )}
-                      </div>
-
-                      {/* Form Input */}
-                      <div className="space-y-4 w-full">
-                        <Input
-                          className="w-full"
-                          placeholder="Title"
-                          value={title}
-                          onChange={(e) => setTitle(e.target.value)}
-                          required
-                        />
-                        <Textarea
-                          className="w-full"
-                          placeholder="Your thoughts"
-                          value={desc}
-                          onChange={(e) => setDesc(e.target.value)}
-                          rows={4}
-                          required
-                        />
-
-                        {/* Custom File Upload Button */}
-                        <div className="flex items-center gap-4">
-                          <input
-                            type="file"
-                            accept="image/*"
-                            onChange={handleImageChange}
-                            ref={fileInputRef}
-                            className="hidden"
-                            id="fileUpload"
-                          />
-                          <Button
-                            type="button"
-                            variant="outline"
-                            onClick={() => fileInputRef.current?.click()}
-                            className="flex items-center cursor-pointer hover:text-foreground gap-2"
-                          >
-                            <ImagePlus size={16} />
-                            {image ? "Change Image" : "Choose Image"}
-                          </Button>
-                          {image && (
-                            <span className="text-sm text-muted-foreground truncate max-w-[200px]">
-                              {image.name}
-                            </span>
-                          )}
-                        </div>
-
-                        <div className="flex justify-end">
-                          <Button
-                            type="submit"
-                            disabled={loading}
-                            className="w-full cursor-pointer"
-                          >
-                            {loading ? "Publishing..." : "Publish"}
-                          </Button>
-                        </div>
-                      </div>
-                    </form>
-                  </DialogContent>
-
-                </Dialog>
+                <SidebarFormPost />
               </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
