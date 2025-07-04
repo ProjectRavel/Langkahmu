@@ -15,10 +15,12 @@ const ProjectSchema = new Schema({
     type: String,
     trim: true,
   },
-  images: {
-    type: [String],
-    default: [],
-  },
+  images:[
+    {
+      url: {type: String},
+      publicId: {type: String}
+    }
+  ],
   likesCount: {
     type: Number,
     default: 0,
