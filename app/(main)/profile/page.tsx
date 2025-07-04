@@ -50,6 +50,8 @@ export default function ProfilePage() {
 
   const projects = data?.userProjects || [];
 
+  console.log("User Projects:", projects);
+
   const handleEdit = (project: { title: string; description: string }) => {
     setEditData({
       title: project.title,
@@ -57,7 +59,7 @@ export default function ProfilePage() {
     });
   };
 
-  const saveEdit = async (id: string) => {
+  const handleEditProject = async (id: string) => {
     try {
       const res = await fetch(`/api/project/profile/${id}`, {
         method: "PUT",
@@ -74,14 +76,14 @@ export default function ProfilePage() {
     }
   };
 
-
-  const deleteProject = async (projectId: string) => {
+  const handleDeleteProject = async (projectId: string, publicId: string) => {
     try {
       const res = await fetch(`/api/project/profile/${projectId}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
+        body: JSON.stringify({ publicId }),
       });
 
       if (res.ok) {
@@ -189,7 +191,7 @@ export default function ProfilePage() {
                   _id: string;
                   title: string;
                   description: string;
-                  image: string;
+                  images?: { url: string; publicId: string }[];
                 },
                 i: number
               ) => (
@@ -265,7 +267,7 @@ export default function ProfilePage() {
                               <button
                                 type="button"
                                 className="px-4 py-2 bg-primary text-white rounded-2xl hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                                onClick={() => saveEdit(project._id)}
+                                onClick={() => handleEditProject(project._id)}
                                 disabled={
                                   !editData.title || !editData.description
                                 }
@@ -277,7 +279,7 @@ export default function ProfilePage() {
                         </Dialog>
 
                         <DropdownMenuItem
-                          onClick={() => deleteProject(project._id)}
+                          onClick={() => handleDeleteProject(project._id, project.images?.[0]?.publicId || "")}
                           className="flex items-center gap-2 cursor-pointer text-red-600 focus:text-red-600"
                         >
                           <Trash className="w-4 h-4" />
@@ -308,10 +310,10 @@ export default function ProfilePage() {
                       {project.description || "No description provided."}
                     </p>
 
-                    {project.image && (
+                    {project.images?.[0]?.url && (
                       <div className="mt-2 rounded-xl overflow-hidden border border-border transition-transform">
                         <Image
-                          src={project.image}
+                          src={project.images[0].url}
                           alt={project.title}
                           width={600}
                           height={300}
@@ -319,7 +321,6 @@ export default function ProfilePage() {
                         />
                       </div>
                     )}
-
                     <div className="mt-3 flex items-center gap-8 text-muted-foreground text-base">
                       <button className="flex items-center gap-2 hover:text-red-500 cursor-pointer transition">
                         <Heart className="w-5 h-5" />
