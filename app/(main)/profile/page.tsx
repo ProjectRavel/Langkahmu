@@ -5,7 +5,6 @@ import { useState } from "react";
 import useSWR, { mutate } from "swr";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -144,14 +143,10 @@ export default function ProfilePage() {
             {/* Badges */}
             {loadingUser ? (
               <>
-                <Skeleton className="h-10 w-24 mx-auto lg:mx-0 px-4 items-center gap-2" />
                 <Skeleton className="h-6 w-48 mx-auto lg:mx-0" />
               </>
             ) : (
               <>
-                <Badge className="w-fit mx-auto lg:mx-0 px-4 py-1.5 text-base rounded-full bg-primary/90 text-white shadow-md flex items-center gap-2 hover:scale-105 transition-transform">
-                  <span>💻</span> Fullstack Dev
-                </Badge>
 
                 <p className="text-base sm:text-lg text-zinc-600 dark:text-zinc-400 max-w-xl leading-relaxed mx-auto lg:mx-0">
                   Suka ngoding, ngopi, dan explore hal baru ✨. Mengembangkan
@@ -197,7 +192,7 @@ export default function ProfilePage() {
               ) => (
                 <div
                   key={i}
-                  className="relative flex flex-col sm:flex-row gap-5 p-6 rounded-2xl border border-border bg-background cursor-pointer hover:shadow-md transition-shadow duration-300"
+                  className="relative flex flex-col sm:flex-row gap-5 p-6 rounded-2xl border border-border bg-card cursor-pointer hover:shadow-md transition-shadow duration-300"
                 >
                   {/* Titik tiga */}
                   <div className="absolute top-4 right-4 z-20">
