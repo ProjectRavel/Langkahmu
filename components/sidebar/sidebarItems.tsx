@@ -39,7 +39,7 @@ export default function SidebarItems() {
             <Link href={item.url}>
               <SidebarMenuButton size="default" className={buttonClasses}>
                 <item.icon className="w-5 h-5" />
-                <span>{item.title}</span>
+                <span>{item.title}</span> 
               </SidebarMenuButton>
             </Link>
           </SidebarMenuItem>
