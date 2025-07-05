@@ -1,5 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import Image from "next/image";
 
 export default function ProfileInfo({
   user,
@@ -20,12 +21,11 @@ export default function ProfileInfo({
           {loadingUser ? (
             <Skeleton className="h-44 w-44 sm:h-48 sm:w-48 rounded-full relative z-10" />
           ) : (
-            <Avatar className="h-44 w-44 sm:h-48 sm:w-48 rounded-full relative border border-border shadow-2xl shadow-zinc-800 dark:shadow-zinc-900">
-              <AvatarImage
-                src={user?.image || ""}
-                alt={user?.name || ""}
-                className="object-cover"
-              />
+            <Avatar
+              className="h-44 w-44 sm:h-48 sm:w-48 rounded-full relative border border-border shadow-2xl shadow-zinc-800 dark:shadow-zinc-900"
+              data-slot="avatar"
+            >
+              <Image src={user?.image ?? ""} alt={user?.name ?? ""} fill />
               <AvatarFallback className="text-2xl font-bold bg-muted">
                 RP
               </AvatarFallback>
