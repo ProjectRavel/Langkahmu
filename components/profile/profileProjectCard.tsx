@@ -22,7 +22,7 @@ import {
   Pencil,
   Trash,
 } from "lucide-react";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { Skeleton } from "../ui/skeleton";
 import { toast } from "sonner";
@@ -145,7 +145,7 @@ export default function ProjectCard({
           ) => (
             <div
               key={i}
-              className="relative flex flex-col sm:flex-row gap-5 p-6 rounded-2xl border border-border bg-card cursor-pointer hover:shadow-md transition-shadow duration-300"
+              className="relative flex flex-col sm:flex-row gap-5 p-6 border-b border-border bg-background cursor-pointer hover:shadow-md transition-shadow duration-300"
             >
               {/* Titik tiga */}
               <div className="absolute top-4 right-4 z-20">
@@ -184,7 +184,10 @@ export default function ProjectCard({
                             Update your project details here.
                           </DialogDescription>
                         </DialogHeader>
-                        <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+                        <form
+                          className="space-y-4"
+                          onSubmit={(e) => e.preventDefault()}
+                        >
                           <input
                             type="text"
                             placeholder="Project Title"
@@ -242,7 +245,12 @@ export default function ProjectCard({
 
               {/* Avatar + Content */}
               <Avatar className="h-14 w-14 mt-1">
-                <AvatarImage src={user?.image || ""} />
+                <Image
+                  src={user?.image || "/profile.png"}
+                  alt="Avatar"
+                  width={100}
+                  height={100}
+                />
                 <AvatarFallback>RP</AvatarFallback>
               </Avatar>
 
@@ -260,7 +268,6 @@ export default function ProjectCard({
                 <p className="text-base text-zinc-600 dark:text-zinc-400 leading-relaxed">
                   {project.description || "No description provided."}
                 </p>
-
                 {project.images?.[0]?.url && (
                   <div className="mt-2 rounded-xl overflow-hidden border border-border transition-transform">
                     <Image
