@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { BottomNav } from "@/components/ui/bottomNav";
+import { Toaster } from "sonner";
 import "@/app/globals.css";
 
 const geistSans = Geist({
@@ -45,6 +46,16 @@ export default function MainLayout({
             {/* Mobile Bottom Navigation */}
             <BottomNav />
           </SidebarProvider>
+          {/* Toast notifications */}
+          <Toaster
+            theme="system"
+            position="top-right"
+            toastOptions={{
+              className:
+                "bg-white dark:bg-zinc-900 border border-border text-sm text-zinc-900 dark:text-zinc-100 rounded-xl shadow-lg px-4 py-3",
+              duration: 3000,
+            }}
+          />
         </ThemeProvider>
       </body>
     </html>
