@@ -1,4 +1,5 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { User, Settings, LogOut } from "lucide-react";
@@ -23,10 +24,21 @@ export default function SidebarFooterProfile() {
       <DropdownMenuTrigger asChild>
         <button className="w-full cursor-pointer flex items-center gap-3 px-3 py-2 hover:bg-muted rounded-lg transition-all duration-150">
           <div className="relative">
-            <Avatar className="h-10 w-10 ring-1 ring-ring/20">
-              <AvatarImage src={user?.image || ""} alt={user?.name || ""} />
-              <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
+            <Avatar className="relative">
+              {user?.image ? (
+                <Image
+                  src={user.image}
+                  alt={user.name || "Avatar"}
+                  width={40}
+                  height={40}
+                  className="rounded-full"
+                />
+              ) : (
+                <AvatarFallback>{user?.name?.[0] ?? "?"}</AvatarFallback>
+              )}
+              <span className="absolute bottom-0 right-0 h-2.5 w-2.5 bg-emerald-500 rounded-full border-2 border-background" />
             </Avatar>
+
             <span className="absolute bottom-0 right-0 h-2.5 w-2.5 bg-emerald-500 rounded-full border-2 border-background" />
           </div>
           <div className="flex flex-col items-start justify-center overflow-hidden">
