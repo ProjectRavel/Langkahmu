@@ -1,11 +1,6 @@
 "use client";
 
-import { useEffect, useState, useMemo } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import clsx from "clsx";
-
-import { Calendar, Home, Search, Settings, User } from "lucide-react";
+import { useEffect, useState } from "react";
 
 import {
   Sidebar,
@@ -14,28 +9,16 @@ import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarMenu,
-  SidebarMenuButton,
   SidebarMenuItem,
   SidebarFooter,
 } from "@/components/ui/sidebar";
 
 import SidebarFormPost from "./sidebar/sidebarFormPost";
 import SidebarFooterProfile from "./sidebar/sidebarFooterProfile";
+import SidebarItems from "./sidebar/sidebarItems";
 
 export function AppSidebar() {
   const [hasMounted, setHasMounted] = useState(false);
-  const pathname = usePathname();
-
-  const items = useMemo(
-    () => [
-      { title: "Home", url: "/home", icon: Home },
-      { title: "Todo's", url: "/todos", icon: Calendar },
-      { title: "Search", url: "/search", icon: Search },
-      { title: "Profile", url: "/profile", icon: User },
-      { title: "Settings", url: "/settings", icon: Settings },
-    ],
-    []
-  );
 
   useEffect(() => {
     setHasMounted(true);
@@ -46,7 +29,7 @@ export function AppSidebar() {
   }
 
   return (
-    <Sidebar variant="sidebar" className="bg-white border-r shadow-sm">
+    <Sidebar variant="sidebar" className="border-r shadow-sm">
       <SidebarHeader className="justify-center mt-4 mx-auto">
         <span className="font-bold text-2xl text-foreground">Langkahmu</span>
       </SidebarHeader>
@@ -54,31 +37,7 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu className="space-y-2">
-              {items.map((item) => {
-                const isActive = pathname === item.url;
-                const buttonClasses = clsx(
-                  "flex items-center gap-3 w-full px-4 py-2 text-base rounded-full transition-all hover:bg-muted hover:text-foreground cursor-pointer duration-150",
-                  {
-                    "text-foreground font-semibold": isActive,
-                    "text-muted-foreground": !isActive,
-                  }
-                );
-
-                return (
-                  <SidebarMenuItem key={item.title}>
-                    <Link href={item.url}>
-                      <SidebarMenuButton
-                        size="default"
-                        className={buttonClasses}
-                      >
-                        <item.icon className="w-5 h-5" />
-                        <span>{item.title}</span>
-                      </SidebarMenuButton>
-                    </Link>
-                  </SidebarMenuItem>
-                );
-              })}
-
+              <SidebarItems />
               <SidebarMenuItem>
                 <SidebarFormPost />
               </SidebarMenuItem>
