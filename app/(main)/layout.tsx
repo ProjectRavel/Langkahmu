@@ -18,8 +18,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Main App",
-  description: "Your app description",
+  title: "Langkahmu",
+  description: "A platform to share your journey and connect with others",
 };
 
 export default function MainLayout({
