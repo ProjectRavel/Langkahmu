@@ -88,7 +88,17 @@ export default function Homepage() {
 
         {/* Profile Sidebar */}
         {/*  */}
-        <ProfileSidebar user={user} />
+        <ProfileSidebar
+          user={
+            user
+              ? {
+                  name: user.name ?? undefined,
+                  email: user.email ?? undefined,
+                  image: user.image ?? undefined,
+                }
+              : null
+          }
+        />
       </div>
     </section>
   );
