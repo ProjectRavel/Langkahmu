@@ -71,33 +71,36 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 ">
-      <div className="flex w-full max-w-5xl rounded-3xl overflow-hidden shadow-2xl border border-[var(--border)] bg-white/10 dark:bg-zinc-900/10 backdrop-blur-md">
-        {/* Left Image */}
-        <div className="hidden md:flex w-1/2 items-center justify-center p-8 animate-float">
-          <Image
-            width={400}
-            height={400}
-            src="/join_banner.svg"
-            alt="Register Image"
-            className="max-w-full h-auto object-contain drop-shadow-2xl"
-          />
+    <div className="min-h-screen flex items-center justify-center px-4 bg-[var(--background)]">
+      <div className="flex flex-col-reverse md:flex-row w-full max-w-6xl rounded-2xl overflow-hidden shadow-lg border border-[var(--border)] bg-card backdrop-blur-md">
+        {/* Left - Illustration */}
+        <div className="hidden md:flex w-1/2 bg-muted items-center justify-center">
+          <div className="w-full h-full relative">
+            <Image
+              src="/join-banner.png"
+              alt="Login Illustration"
+              fill
+              className="object-cover h-full w-full"
+              priority
+            />
+          </div>
         </div>
-
-        {/* Right Form */}
-        <div className="w-full md:w-1/2 p-8">
-          <h1 className="text-4xl font-bold mb-4 text-center text-zinc-900 dark:text-white">
-            Join And Start with{" "}
-            <span className="text-[var(--primary)]">Langkahmu</span>
-          </h1>
-          <p className="text-sm text-[var(--muted-foreground)] mb-6 text-center">
-            Create an account to start your journey.
-          </p>
+        {/* Right - Form */}
+        <div className="w-full md:w-1/2 p-10">
+          <div className="mb-6 text-center">
+            <h1 className="text-3xl font-bold text-foreground">
+              Create your{" "}
+              <span className="text-[var(--primary)]">Langkahmu</span> account
+            </h1>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Let&apos;s start your new journey.
+            </p>
+          </div>
 
           {error && (
-            <div className="mb-4 animate-fadeIn max-w-md mx-auto px-4 py-3 border border-destructive text-destructive bg-destructive/10 rounded-md text-sm flex items-center gap-2">
+            <div className="mb-4 text-sm bg-destructive/10 text-destructive border border-destructive px-4 py-3 rounded-md flex items-center gap-2 animate-fadeIn">
               <svg
-                className="w-5 h-5 flex-shrink-0"
+                className="w-5 h-5"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
@@ -109,55 +112,55 @@ export default function RegisterPage() {
                   d="M12 8v4m0 4h.01M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"
                 />
               </svg>
-              <p>{error}</p>
+              <span>{error}</span>
             </div>
           )}
 
-          <form onSubmit={handleRegister} className="space-y-5">
+          <form onSubmit={handleRegister} className="space-y-4">
             <div>
-              <label className="block text-sm mb-1 text-zinc-700 dark:text-zinc-300">
+              <label className="block text-sm font-medium text-muted-foreground mb-1">
                 Username
               </label>
               <input
                 type="text"
-                required
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
-                placeholder="Enter your username"
+                required
+                className="w-full px-4 py-3 rounded-lg border border-[var(--border)] bg-input text-foreground focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
+                placeholder="e.g. username"
               />
             </div>
 
             <div>
-              <label className="block text-sm mb-1 text-zinc-700 dark:text-zinc-300">
+              <label className="block text-sm font-medium text-muted-foreground mb-1">
                 Email
               </label>
               <input
                 type="email"
-                required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
-                placeholder="Enter your email"
+                required
+                className="w-full px-4 py-3 rounded-lg border border-[var(--border)] bg-input text-foreground focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
+                placeholder="you@example.com"
               />
             </div>
 
             <div className="relative">
-              <label className="block text-sm mb-1 text-zinc-700 dark:text-zinc-300">
+              <label className="block text-sm font-medium text-muted-foreground mb-1">
                 Password
               </label>
               <input
                 type={showPassword ? "text" : "password"}
-                required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 pr-12 rounded-xl border border-[var(--border)] bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
-                placeholder="••••••"
+                required
+                className="w-full px-4 py-3 pr-12 rounded-lg border border-[var(--border)] bg-input text-foreground focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
+                placeholder="••••••••"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword((prev) => !prev)}
-                className="absolute cursor-pointer top-9 right-4 text-zinc-500 dark:text-zinc-400 hover:text-[var(--primary)]"
+                className="absolute top-9 right-4 text-muted-foreground hover:text-[var(--primary)]"
               >
                 {showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
               </button>
@@ -166,29 +169,28 @@ export default function RegisterPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex items-center justify-center gap-2 py-3 px-4 bg-[var(--primary)] text-white rounded-xl transition hover:opacity-90 disabled:opacity-70 cursor-pointer"
+              className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-lg text-white bg-[var(--primary)] hover:opacity-90 disabled:opacity-70"
             >
               {loading && <Loader2 className="w-4 h-4 animate-spin" />}
-              {loading ? "Creating Account..." : "Sign Up"}
+              {loading ? "Creating Account..." : "Create Account"}
             </button>
           </form>
 
-          <div className="my-4 flex items-center justify-center gap-2 text-sm text-zinc-500 dark:text-zinc-400">
-            <span className="w-16 h-px bg-[var(--border)]"></span>
+          <div className="my-4 flex items-center justify-center gap-3 text-sm text-muted-foreground">
+            <span className="w-20 h-px bg-[var(--border)]"></span>
             or
-            <span className="w-16 h-px bg-[var(--border)]"></span>
+            <span className="w-20 h-px bg-[var(--border)]"></span>
           </div>
 
           <button
             onClick={() => signIn("google", { callbackUrl: "/home" })}
-            className="w-full py-3 px-4 border border-[var(--border)] rounded-xl flex items-center justify-center gap-3 text-zinc-800 cursor-pointer dark:text-white bg-white dark:bg-zinc-900 hover:border-[var(--primary)] hover:text-white transition"
             disabled={loading}
+            className="w-full py-3 px-4 rounded-lg border border-[var(--border)] bg-background text-foreground flex items-center justify-center gap-2 hover:border-[var(--primary)]"
           >
-            <FcGoogle className="w-5 h-5" />
-            Sign up with Google
+            <FcGoogle className="w-5 h-5" /> Sign up with Google
           </button>
 
-          <div className="mt-4 text-xs text-center text-zinc-400 dark:text-zinc-500">
+          <p className="mt-6 text-xs text-center text-muted-foreground">
             Already have an account?{" "}
             <Link
               href="/login"
@@ -196,9 +198,9 @@ export default function RegisterPage() {
             >
               Sign in
             </Link>
-          </div>
+          </p>
 
-          <div className="mt-6 text-xs text-center text-zinc-400 dark:text-zinc-500">
+          <p className="mt-3 text-[10px] text-center text-muted-foreground">
             By signing up, you agree to our <br />
             <span className="underline hover:text-[var(--primary)]">
               Terms of Service
@@ -207,7 +209,7 @@ export default function RegisterPage() {
             <span className="underline hover:text-[var(--primary)]">
               Privacy Policy
             </span>
-          </div>
+          </p>
         </div>
       </div>
     </div>
