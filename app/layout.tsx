@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "App Root",
-  description: "Root layout",
+  title: "Langkahmu",
+  description: "A platform to share your journey and connect with others",
 };
 
 export default function RootLayout({

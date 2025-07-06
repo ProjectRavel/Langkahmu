@@ -81,26 +81,28 @@ export default function RegisterPage() {
   }, []);
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4">
-      <div className="flex w-full max-w-5xl rounded-3xl overflow-hidden shadow-2xl border border-[var(--border)] bg-white/10 dark:bg-zinc-900/10 backdrop-blur-md">
+    <div className="min-h-screen flex items-center justify-center px-4 bg-[var(--background)]">
+      <div className="flex flex-col-reverse md:flex-row w-full max-w-6xl rounded-2xl overflow-hidden shadow-lg border border-[var(--border)] bg-card backdrop-blur-md">
         {/* Left Banner */}
-        <div className="hidden md:flex w-1/2 items-center justify-center p-8 animate-float">
-          <Image
-            src="/join_banner.svg"
-            alt="Join Illustration"
-            width={400}
-            height={400}
-            className="object-contain drop-shadow-2xl"
-          />
+        <div className="hidden md:flex w-1/2 bg-muted items-center justify-center">
+          <div className="w-full h-full relative">
+            <Image
+              src="/join-banner.png"
+              alt="Login Illustration"
+              fill
+              className="object-cover h-full w-full"
+              priority
+            />
+          </div>
         </div>
 
         {/* Right Form */}
-        <div className="w-full md:w-1/2 p-8 md:p-12">
+        <div className="w-full md:w-1/2 p-10">
           <h1 className="text-3xl font-semibold text-center text-zinc-800 dark:text-white">
             Create your <span className="text-[var(--primary)]">Langkahmu</span>{" "}
             account
           </h1>
-          <p className="text-sm text-center text-zinc-500 dark:text-zinc-400 mb-6">
+          <p className="text-sm text-center text-muted-foreground mb-6">
             Begin your creative journey
           </p>
 
@@ -111,7 +113,7 @@ export default function RegisterPage() {
                 placeholder="Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
+                className="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
               />
               {errors.username && (
                 <p className="text-sm text-red-500 mt-1">{errors.username}</p>
@@ -124,7 +126,7 @@ export default function RegisterPage() {
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
+                className="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
               />
               {errors.email && (
                 <p className="text-sm text-red-500 mt-1">{errors.email}</p>
@@ -137,12 +139,12 @@ export default function RegisterPage() {
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 pr-12 rounded-xl border border-[var(--border)] bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
+                className="w-full px-4 py-3 pr-12 rounded-xl border border-[var(--border)] bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute inset-y-0 right-3 flex items-center text-zinc-500"
+                className="absolute inset-y-0 right-3 flex items-center text-muted-foreground"
               >
                 {showPassword ? <HiEyeOff size={20} /> : <HiEye size={20} />}
               </button>
@@ -154,18 +156,20 @@ export default function RegisterPage() {
             <button
               type="submit"
               disabled={loading}
-              className={`w-full py-3 px-4 mt-2 bg-[var(--primary)] text-white rounded-xl transition flex items-center justify-center cursor-pointer gap-2 ${
-                loading ? "cursor-not-allowed opacity-80" : "hover:opacity-90"
+              className={`w-full py-3 px-4 mt-2 rounded-xl text-white font-medium transition flex items-center justify-center gap-2 ${
+                loading
+                  ? "bg-[var(--primary)] opacity-80 cursor-not-allowed"
+                  : "bg-[var(--primary)] hover:opacity-90"
               }`}
             >
-              {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : null}
+              {loading && <Loader2 className="w-5 h-5 animate-spin" />}
               {loading ? loadingText : "Create Account"}
             </button>
           </form>
 
           <div className="flex items-center my-6">
             <div className="flex-grow border-t border-[var(--border)]" />
-            <span className="mx-4 text-sm text-zinc-500">or</span>
+            <span className="mx-4 text-sm text-muted-foreground">or</span>
             <div className="flex-grow border-t border-[var(--border)]" />
           </div>
 
@@ -176,13 +180,13 @@ export default function RegisterPage() {
               signIn("google", { callbackUrl: "/home" });
             }}
             disabled={loading}
-            className="w-full py-3 px-4 border border-[var(--border)] rounded-xl flex items-center justify-center gap-3 bg-white text-zinc-800 cursor-pointer dark:bg-zinc-900 dark:text-white hover:border-[var(--primary)] transition"
+            className="w-full py-3 px-4 rounded-xl border border-[var(--border)] bg-white dark:bg-zinc-900 text-zinc-800 dark:text-white flex items-center justify-center gap-3 hover:border-[var(--primary)] transition"
           >
             <FcGoogle className="w-5 h-5" />
             Sign up with Google
           </button>
 
-          <p className="mt-6 text-sm text-center text-zinc-600 dark:text-zinc-400">
+          <p className="mt-6 text-sm text-center text-muted-foreground">
             Already have an account?{" "}
             <Link
               href="/login"
@@ -192,7 +196,7 @@ export default function RegisterPage() {
             </Link>
           </p>
 
-          <p className="mt-2 text-xs text-center text-zinc-400 dark:text-zinc-500">
+          <p className="mt-2 text-xs text-center text-muted-foreground">
             By signing up, you agree to our{" "}
             <Link
               href="/privacy-policy"

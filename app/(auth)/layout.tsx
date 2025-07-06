@@ -9,7 +9,7 @@ export default function AuthLayout({
 }) {
   return (
     <ThemeProvider attribute="class" defaultTheme="system">
-    <div className="min-h-screen flex items-center justify-center bg-[var(--background)]">
+    <div className="justify-center bg-background">
       {children}
     </div>
     </ThemeProvider>
